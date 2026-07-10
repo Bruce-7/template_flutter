@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000102">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: get_build_number" time="0.053568">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: increment_build_number" time="0.120483">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: fvm flutter clean" time="3.100701">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: fvm flutter pub get" time="3.690039">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: 
+        fvm flutter build ipa           --release           --build-number=69           --export-options-plist=ios/distribution/ExportOptions/ExportOptions-AppStore.plist           --dart-define=environment=production
+      " time="80.369692">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: 
+        mkdir -p ios/builds/release
+        mv build/ios/ipa/*.ipa ios/builds/release/Runner_2.1.0_69_2026-04-29-23:31:11.ipa
+      " time="0.007351">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: 
+        ditto -c -k -rsrc build/ios/archive/Runner.xcarchive/dSYMs ios/builds/release/Runner_2.1.0_69_2026-04-29-23:31:11.ipa.dSYM.zip
+      " time="3.868373">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="8: pilot" time="118.551828">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

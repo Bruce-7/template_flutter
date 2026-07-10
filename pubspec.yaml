@@ -1,0 +1,192 @@
+name: flutter_app
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: 1.0.9
+
+  # 状态管理
+  hooks_riverpod: 3.0.3
+  flutter_hooks: 0.21.3+1
+  riverpod_annotation: 3.0.3
+
+  # 路由管理
+  auto_route: 10.3.0
+
+  # json序列化
+  json_annotation: 4.9.0
+
+  # 网络框架
+  dio: 5.9.2
+
+  # 国际化
+  easy_localization: 3.0.8
+  easy_logger: 0.0.2
+  
+  # svg资源库
+  flutter_svg: 2.2.4
+
+  # 列表上拉加载、下拉刷新
+  easy_refresh: 3.5.0
+
+  #  # 本地缓存网络图片
+  #  cached_network_image: 3.4.1
+  # 图片的UI编辑、本地缓存网络图片
+  extended_image: 10.0.1
+
+  # 图片数据的编辑
+  image_editor: 1.6.0
+
+  # 用于页面可见回调处理
+  visibility_detector: 0.4.0+2
+
+  # 日志
+  logger: 2.7.0
+
+  # 本地偏好存储（简单设置值）
+  shared_preferences: 2.5.5
+
+  # 本地文件操作
+  path_provider: 2.1.5
+
+  # 本地数据库
+  #  drift: 2.29.0
+  #  drift_flutter: 0.2.7
+
+  #  sqlcipher_flutter_libs: 0.6.8
+  #  sqlite3: 2.9.4
+
+  # 路径操作库
+  path: 1.9.1
+
+  # Toast、Loading、Dialog
+  flutter_smart_dialog: 5.1.0
+
+  # 图像选择器
+  image_picker: 1.2.1
+
+  # 系统权限检查
+  permission_handler: 12.0.1
+
+  # 简单、快速生成RFC4122和RFC9562 UUID。
+  uuid: 4.5.3
+  # 错误、性能统计
+  # sentry_flutter: 8.14.2
+
+  # 移除图片背景
+  #  image_background_remover: 1.0.0
+
+  # 图表库，支持折线图、柱状图、饼图、散点图和雷达图。
+  # fl_chart: 1.2.0
+
+  # 包含实用函数和类。例如：是否相等、迭代、优先级等等。
+  collection: 1.19.1
+
+  # 可滑动列表项，具有可关闭的定向滑动操作，cell左滑出现action操作。
+  flutter_slidable: 4.0.3
+
+  # App包信息
+  package_info_plus: 9.0.1
+
+  # 分享内容-唤起系统分享
+  share_plus: 12.0.2
+
+  # 一个用于URL启动邮箱、电话等。
+  url_launcher: 6.3.2
+
+  # 订阅相关
+  #  in_app_purchase: 3.2.3
+  #  in_app_purchase_storekit: 0.4.4
+
+  # 三方内购服务
+  #  purchases_flutter: 9.16.1
+
+  # 压缩功能：zip等格式
+  archive: 4.0.9
+
+  # 唤起系统文件App选择文件导入
+  file_picker: 11.0.2
+
+  # iOS iCloud 云同步
+  # icloud_storage_sync: 0.0.4
+
+  # 系统评价弹窗
+  # in_app_review: 2.0.11
+
+  # 跑马灯
+  # marqueer: 2.1.0
+
+  # 显示本地通知的跨平台插件
+  flutter_local_notifications: 20.1.0
+  
+  # 时区支持
+  timezone: 0.10.1
+
+  # 瀑布流布局
+  flutter_staggered_grid_view: 0.7.0
+
+#  # 谷歌字体
+#  google_fonts: 6.2.1
+
+#  # 启动图
+#  flutter_native_splash: 2.4.4
+
+#  # 设备信息相关
+#  device_info_plus: 11.3.0
+
+#  # 密码学相关
+#  crypto: 3.0.7
+
+
+# 开发依赖
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: 6.0.0
+
+  # 代码生成器
+  build_runner: 2.7.1
+
+  # 状态管理
+  custom_lint: 0.8.0
+  riverpod_generator: 3.0.3
+  riverpod_lint: 3.0.3
+
+  # 路由管理
+  auto_route_generator: 10.2.6
+
+  # json序列化
+  json_serializable: 6.11.2
+
+  # assets资源管理
+  flutter_gen_runner: 5.13.0+1
+
+  # 本地数据库
+  drift_dev: 2.29.0
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/translations/
+    - assets/icons/
+    - assets/images/
+
+
+flutter_gen:
+  output: lib/gen/ # 输出的代码文件目录
+  line_length: 150
+  integrations:
+    flutter_svg: true # 如果用 flutter_svg 渲染 .svg

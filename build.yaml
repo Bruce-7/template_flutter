@@ -1,0 +1,25 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          # 使用 ISO-8601 字符串（false默认是：Drift 默认使用 Unix 时间戳）
+          store_date_time_values_as_text: true
+
+          # 您还可以选择指定测试文件和模式文件的存储目录。Drift 将生成多个模式文件，
+          # 每个数据库模式版本对应一个文件。这些文件用于将当前模式与之前的模式进行比较，并生成迁移代码。
+          # The directory where the test files are stored:
+          test_dir: drift/test/ # (default)
+
+          # The directory where the schema files are stored:
+          schema_dir: drift/schemas/  # (default)
+
+          databases:
+            # Required: A name for the database and its path
+            app_db: lib/database/database.dart
+
+          # Optional: Add more databases
+          # another_db: lib/database2.dart
+
+        generate_for:
+          - lib/database/**.dart  # pubspec.yaml 的依赖库 drift_dev。 build_runner 仅扫描数据库目录

@@ -1,0 +1,9 @@
+source "https://gems.ruby-china.com"
+
+# 统一使用2.5.3版本：gem install bundler -v 2.5.3
+gem "fastlane", "2.227.0"
+gem "cocoapods", "1.16.2"
+
+
+plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
+eval_gemfile(plugins_path) if File.exist?(plugins_path)

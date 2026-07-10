@@ -1,0 +1,223 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+require 'json'
+default_platform(:ios)
+
+platform :ios do
+  # 时间格式
+  def formatted_time
+    Time.now.strftime("%Y-%m-%d-%H:%M:%S")
+  end
+
+#   # 发送飞书通知
+#   def notify_feishu(title:, version:, build:, type:, content_url:)
+#     content_text = "Version：#{version}\nBuild：#{build}\n打包类型：#{type}\n#{content_url}\n"
+
+#     json = {
+#       msg_type: "post",
+#       content: {
+#         post: {
+#           zh_cn: {
+#             title: title,
+#             content: [[{ tag: "text", text: content_text },{tag: "at", user_id: "all"}]]
+#           }
+#         }
+#       }
+#     }.to_json
+
+#     # 自测群机器人
+# #     webhook_url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+
+#     # 测试发包群
+#     webhook_beta_url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+
+#     # 正式发包群
+#     webhook_release_url = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+
+#     webhook_url = type == "Beta" ? webhook_beta_url : webhook_release_url
+
+#     sh("curl -X POST -H \"Content-Type: application/json\" -d '#{json}' #{webhook_url}")
+#   end
+
+  # 获取 pubspec.yaml 的版本号
+  def get_version
+    # 目前在/project/ios/fastlane/ 所以需要向上两个层级才是project根目录
+    UI.message "get_version当前路径：#{Dir.pwd}"
+    Dir.chdir("../..") do
+      UI.message "get_version执行路径：#{Dir.pwd}"
+      version_line = File.readlines("pubspec.yaml").find { |line| line =~ /^version:/ }
+      return version_line.strip.split(":").last.strip.split("+").first  # 如 "1.38.0"
+    end
+  end
+
+  # 更新 Build 号，自动加1
+  def update_build_number
+    build_number = get_build_number(xcodeproj: "Runner.xcodeproj")
+    new_build_number = build_number.to_i + 1
+    increment_build_number(
+      xcodeproj: "Runner.xcodeproj",
+      build_number: new_build_number
+    )
+    return new_build_number
+  end
+
+  # 生成 IPA 名称，包含版本号和构建号
+  def generate_ipa_name(version:, build_number:)
+    time = formatted_time
+    "Runner_#{version}_#{build_number}_#{time}.ipa"
+  end
+
+  # 构建 Flutter 项目
+  def build_flutter_ios(version:, build_number:, build_type:, environment:)
+    UI.message "检查必要命令"
+    ["fvm", "flutter", "bundle", "fastlane"].each do |cmd|
+      unless system("command -v #{cmd} >/dev/null 2>&1")
+        UI.user_error!("❌ 缺少命令：#{cmd}，请先安装")
+      end
+    end
+
+    UI.message "build_flutter_ios当前路径：#{Dir.pwd}"
+    Dir.chdir("../..") do
+      # 目前在/project/ios/fastlane/ 所以需要向上两个层级才是project根目录
+      UI.message "build_flutter_ios执行路径：#{Dir.pwd}"
+      UI.message "🚀 执行 Flutter 清理和依赖获取..."
+      sh("fvm flutter clean")
+      sh("fvm flutter pub get")
+
+      export_options_plist = case build_type
+                             when "beta"
+                               "ios/distribution/ExportOptions/ExportOptions-AdHoc.plist"
+                             when "release"
+                               "ios/distribution/ExportOptions/ExportOptions-AppStore.plist"
+                             else
+                               UI.user_error!("❌ 不支持的 build_type: #{build_type}")
+                             end
+
+      ipa_name = generate_ipa_name(version: version, build_number: build_number)
+      output_dir = "ios/builds/#{build_type}"
+
+      UI.message "ipa_name is: #{ipa_name}"
+      UI.message "version is: #{version} build_number is: #{build_number}"
+      UI.message "使用 export_options_plist: #{export_options_plist}"
+
+      UI.message "🚀 开始构建 Flutter iOS 版本..."
+
+      # beta修改为测试环境
+      dart_environment = "--dart-define=environment=#{environment}"
+
+      sh(%Q{
+        fvm flutter build ipa \
+          --release \
+          --build-number=#{build_number} \
+          --export-options-plist=#{export_options_plist} \
+          #{dart_environment}
+      })
+
+      ipa_path = "#{output_dir}/#{ipa_name}"
+      UI.message "ipa导出到指定目录，路径为:#{ipa_path}"
+
+      sh(%Q{
+        mkdir -p #{output_dir}
+        mv build/ios/ipa/*.ipa #{ipa_path}
+      })
+
+      UI.message "压缩dSYMs导出到指定目录"
+      sh(%Q{
+        ditto -c -k -rsrc build/ios/archive/Runner.xcarchive/dSYMs #{output_dir}/#{ipa_name}.dSYM.zip
+      })
+
+      UI.success "✅ Flutter iOS 构建完成"
+
+      return File.expand_path(ipa_path)
+    end
+  end
+
+  desc "Beta 版本上传蒲公英"
+  lane :beta do |options|
+#     match(type: "adhoc")
+
+    environment = options[:environment] || "test1"
+    UI.message "🌍 使用环境：#{environment}"
+
+    version = get_version
+    new_build_number = update_build_number
+
+    ipa_path = build_flutter_ios(version: version, build_number: new_build_number, build_type: "beta", environment: environment)
+    UI.success "🚀 上传文件路径：#{ipa_path}"
+    pgyer(
+      api_key: ENV.fetch("PGYER_API_KEY"),
+      password: ENV.fetch("PGYER_PASSWORD"),
+      install_type: "2",
+      ipa: ipa_path,
+    )
+
+    UI.success "🚀 Beta 包已上传至蒲公英"
+
+    # notify_feishu(
+    #   title: "🚀 iOS App 新包已上传",
+    #   version: version,
+    #   build: new_build_number,
+    #   type: "Beta",
+    #   content_url: "蒲公英地址：https://www.pgyer.com/example\n请按团队发布清单完成验收。"
+    # )
+  end
+
+  desc "Release 版本上传 App Store"
+  lane :release do |options|
+#     match(type: "appstore")
+
+    environment = options[:environment] || "production"
+    UI.message "🌍 使用环境：#{environment}"
+
+    version = get_version
+    new_build_number = update_build_number
+
+    ipa_path = build_flutter_ios(version: version, build_number: new_build_number, build_type: "release", environment: environment)
+    UI.success "🚀 上传文件路径：#{ipa_path}"
+
+    # 上传 TestFlight / App Store。API Key JSON 内容在帐户持有人的苹果开发者后台获取对应信息。
+    # https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file
+    pilot(
+      api_key_path: ENV.fetch("APP_STORE_CONNECT_API_KEY_PATH"),
+      skip_waiting_for_build_processing: true,
+      skip_submission: true,
+      verbose: true,
+      ipa: ipa_path,
+    )
+
+    UI.success "🚀 Release 包已上传至 App Store"
+
+    # notify_feishu(
+    #   title: "🚀 iOSApp 新包已上传",
+    #   version: version,
+    #   build: new_build_number,
+    #   type: "Release",
+    #   content_url: "Apple 检验通过后，请注意查收邮件，此时才可以在 TestFlight 下载。"
+    # )
+  end
+
+  error do |lane, exception|
+    UI.error "上传失败: #{exception.message}"
+    UI.error exception.backtrace.join("\n")
+
+    # 发送错误通知
+    notification(
+      title: "上传失败",
+      message: "在 #{lane} 过程中发生错误: #{exception.message}",
+      sound: "default"
+    )
+  end
+end

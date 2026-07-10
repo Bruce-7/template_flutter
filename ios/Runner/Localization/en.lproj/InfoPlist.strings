@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  HDApp
+
+  Created by HeDong on 2023/5/18.
+  Copyright © 2023 DRY. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "Asset Manager";
+"CFBundleName" = "Asset Manager";
+"NSCameraUsageDescription" = "We need camera access to take photos for asset icons or note images.";
+"NSPhotoLibraryUsageDescription" = "We need photo library access to select images for asset icons or note images.。";
+"NSPhotoLibraryAddUsageDescription" = "We need permission to save images to your photo library for storing icons and note images.";

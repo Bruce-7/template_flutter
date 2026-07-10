@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  HDApp
+
+  Created by HeDong on 2023/5/18.
+  Copyright © 2023 DRY. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "资时";
+"CFBundleName" = "资时";
+"NSCameraUsageDescription" = "我们需要使用您的相机拍摄照片，用于资产图标或备注图片。";
+"NSPhotoLibraryUsageDescription" = "我们需要访问您的相册，用于资产图标或备注图片。";
+"NSPhotoLibraryAddUsageDescription" = "我们需要您允许保存图片至相册，用于资产图标或备注图片保存到您的相册。";
