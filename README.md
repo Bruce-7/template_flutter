@@ -4,6 +4,12 @@ Flutter App Template 是一个面向商业项目快速启动的 Flutter 基础�
 
 项目包含若干示例页面、示例 API、示例数据库表和模板代码，用于说明工程约定。实际业务开发时可以在现有目录和模式上继续扩展，也可以删除不需要的示例模块。
 
+把项目中文名称改成：你的
+英文改成：你的（如果需要中英文国际化的情况）
+com.你的.项目名称 iOS 和 Android 包名（Bundle ID）
+com.你的.项目名称.hm 鸿蒙包名（Bundle ID）
+示例：com.beanhorse.your
+
 ## 主要能力
 
 - iOS、Android、HarmonyOS/OpenHarmony 工程结构
