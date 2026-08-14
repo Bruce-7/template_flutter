@@ -124,7 +124,9 @@ app.*.symbols
 /ios/build
 *.g.dart
 .idea/
-.fvm/ 
+!.fvm/
+.fvm/*
+!.fvm/fvm_config.json
 ios/builds
 
 # Local signing and release secrets

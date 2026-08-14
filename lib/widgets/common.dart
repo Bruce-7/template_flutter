@@ -211,7 +211,7 @@ Widget buildRowItem(
               style: context.textStyle.bodyMedium,
             ),
           ),
-          if (trailing != null) trailing,
+          ?trailing,
         ],
       ),
     ),

@@ -27,9 +27,9 @@ com.你的.项目名称.hm 鸿蒙包名（Bundle ID）
 
 推荐工具链：
 
-- Flutter `3.35.7`
-- Dart `3.9.2`
-- DevTools `2.48.0`
+- Flutter `3.44.9`
+- Dart `3.12.2`
+- DevTools `2.57.0`
 - 推荐使用 FVM 管理 Flutter SDK
 
 不同平台构建前，请确认本机已安装对应原生工具链、SDK、证书、签名配置和 IDE。

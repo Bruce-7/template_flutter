@@ -48,7 +48,7 @@
 Flutter App Template 是生产级 Flutter 应用启动框架，支持 iOS、Android 和 HarmonyOS/OpenHarmony 平台的商业应用开发。
 
 **技术栈**：
-- Flutter `3.35.7`, Dart `3.9.2`
+- Flutter `3.44.9`, Dart `3.12.2`
 - 状态管理：`hooks_riverpod`, `flutter_hooks`, `riverpod_annotation`（代码生成）
 - 路由：`auto_route`（代码生成）
 - 网络：`dio`（自定义拦截器）

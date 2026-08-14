@@ -223,7 +223,7 @@ class DioClient {
           file.path,
           filename: name,
         ),
-        if (formData != null) ...formData,
+        ...?formData,
       });
 
       Dio dio = _getDio(host: host);
@@ -278,6 +278,7 @@ class DioClient {
         case DioExceptionType.connectionTimeout:
         case DioExceptionType.sendTimeout:
         case DioExceptionType.receiveTimeout:
+        case DioExceptionType.transformTimeout:
           response = ApiResponse(code: ApiResponseCode.http408RequestTimeout, message: '网络连接超时，请检查您的网络连接'.tr());
           break;
 

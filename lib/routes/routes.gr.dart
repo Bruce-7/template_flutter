@@ -24,7 +24,7 @@ import 'package:flutter_app/pages/template/page.dart' as _i7;
 /// [_i1.ExamplePage]
 class ExampleRoute extends _i8.PageRouteInfo<void> {
   const ExampleRoute({List<_i8.PageRouteInfo>? children})
-      : super(ExampleRoute.name, initialChildren: children);
+    : super(ExampleRoute.name, initialChildren: children);
 
   static const String name = 'ExampleRoute';
 
@@ -45,10 +45,10 @@ class ImageCropRoute extends _i8.PageRouteInfo<ImageCropRouteArgs> {
     _i2.ImageCropPageType type = _i2.ImageCropPageType.square,
     List<_i8.PageRouteInfo>? children,
   }) : super(
-          ImageCropRoute.name,
-          args: ImageCropRouteArgs(key: key, imagePath: imagePath, type: type),
-          initialChildren: children,
-        );
+         ImageCropRoute.name,
+         args: ImageCropRouteArgs(key: key, imagePath: imagePath, type: type),
+         initialChildren: children,
+       );
 
   static const String name = 'ImageCropRoute';
 
@@ -100,7 +100,7 @@ class ImageCropRouteArgs {
 /// [_i3.MainPage]
 class MainRoute extends _i8.PageRouteInfo<void> {
   const MainRoute({List<_i8.PageRouteInfo>? children})
-      : super(MainRoute.name, initialChildren: children);
+    : super(MainRoute.name, initialChildren: children);
 
   static const String name = 'MainRoute';
 
@@ -116,7 +116,7 @@ class MainRoute extends _i8.PageRouteInfo<void> {
 /// [_i4.MatchColorsPage]
 class MatchColorsRoute extends _i8.PageRouteInfo<void> {
   const MatchColorsRoute({List<_i8.PageRouteInfo>? children})
-      : super(MatchColorsRoute.name, initialChildren: children);
+    : super(MatchColorsRoute.name, initialChildren: children);
 
   static const String name = 'MatchColorsRoute';
 
@@ -132,7 +132,7 @@ class MatchColorsRoute extends _i8.PageRouteInfo<void> {
 /// [_i5.NotFoundPage]
 class NotFoundRoute extends _i8.PageRouteInfo<void> {
   const NotFoundRoute({List<_i8.PageRouteInfo>? children})
-      : super(NotFoundRoute.name, initialChildren: children);
+    : super(NotFoundRoute.name, initialChildren: children);
 
   static const String name = 'NotFoundRoute';
 
@@ -153,14 +153,14 @@ class PreviewImageRoute extends _i8.PageRouteInfo<PreviewImageRouteArgs> {
     int? initialIndex,
     List<_i8.PageRouteInfo>? children,
   }) : super(
-          PreviewImageRoute.name,
-          args: PreviewImageRouteArgs(
-            key: key,
-            imageSources: imageSources,
-            initialIndex: initialIndex,
-          ),
-          initialChildren: children,
-        );
+         PreviewImageRoute.name,
+         args: PreviewImageRouteArgs(
+           key: key,
+           imageSources: imageSources,
+           initialIndex: initialIndex,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'PreviewImageRoute';
 
@@ -218,7 +218,7 @@ class PreviewImageRouteArgs {
 /// [_i7.TemplatePage]
 class TemplateRoute extends _i8.PageRouteInfo<void> {
   const TemplateRoute({List<_i8.PageRouteInfo>? children})
-      : super(TemplateRoute.name, initialChildren: children);
+    : super(TemplateRoute.name, initialChildren: children);
 
   static const String name = 'TemplateRoute';
 
